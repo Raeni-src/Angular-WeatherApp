@@ -1,0 +1,14 @@
+<link rel="./homepage.component.html" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<body>
+    <div class="container">
+        <!--include fonts for the text in this container-->
+        <h2>Welcome!!</h2>
+        <h1>Weather Visualization</h1>
+
+        <form class="input" (submit)="onSearch($event)">
+            <input type="text" [(ngModel)]="location" name="location" class="inputValue" placeholder="Enter Your Location">
+            <button type="submit">Search</button>
+          </form>
+    </div>
+  </body>

@@ -1,0 +1,27 @@
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<body ng-app="">
+    <div href="{'background-image': 'url(' + ../assets/images/background.jpg + ')'}">
+    </div>
+
+    <div class="container">
+        <h2>Select Weather Parameter</h2>
+        <h2>What Would You Love To See?</h2>
+        <form (submit)="onSubmit($event)" class="input">
+            <select id="trend" [(ngModel)]="myVar" name="trend">
+                    <option value="" disabled>Select a trend</option>
+                    <option value="temperature">Temperature</option>
+                    <option value="humidity_level">Humidity level</option>
+                    <option value="precipitation">Precipitation</option>
+             </select>
+            <select id="type" [(ngModel)]="myType" name="type">
+                    <option value="" disabled>Select Chart Type</option>
+                    <option value="bar">Bar Chart</option>
+                    <option value="line">Line Chart</option>
+             </select>
+             <button type="submit">Select Your Trend</button>
+        </form>
+        <div class="chart-container">
+            <canvas id="MyChart" width="800" height="500">{{ chart }}</canvas>
+        </div>
+    </div>
+</body>
