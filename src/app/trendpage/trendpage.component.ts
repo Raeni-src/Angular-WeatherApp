@@ -33,7 +33,7 @@ export class TrendpageComponent implements OnInit{
   createChart(){
     const ctx = document.getElementById('MyChart') as HTMLCanvasElement;
     let minVal = Math.min(...this.fetchedWeatherData.trend)
-    let minData = minVal > 10 ? minVal - 10 : minVal
+    let minData = minVal > 15 ? minVal - 15 : minVal
 
     if (this.chart) {
       this.chart.destroy();
@@ -48,7 +48,7 @@ export class TrendpageComponent implements OnInit{
           {
             label: this.myVar,
             data: this.fetchedWeatherData.trend,
-            backgroundColor: 'blue'
+            backgroundColor: 'violet'
           }
         ]
       },
@@ -121,7 +121,7 @@ export class TrendpageComponent implements OnInit{
         trendData = []
         weatherData.map((dt: any) => trendData.push(dt.main.humidity))
         break;
-      case 'precipitation':
+      case 'pressure':
         trendData = []
         weatherData.map((dt: any) => trendData.push(dt.main.pressure)) 
         break;
@@ -130,9 +130,9 @@ export class TrendpageComponent implements OnInit{
     }
 
     return {
-      'labels': labels.slice(0, 15),
-      'trend': trendData.slice(0, 15),
-      'stats': stats.slice(0, 15)
+      'labels': labels.slice(0, 20),
+      'trend': trendData.slice(0, 20),
+      'stats': stats.slice(0, 20)
     }
   }
 
