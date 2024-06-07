@@ -18,8 +18,10 @@ export class TrendpageComponent implements OnInit{
   location: string = ''
   myVar: string = 'temperature'
   myType: String = 'bar'
-  apikey: string = 'b252a5af48d4190ae5d519ca9b0e2b75'
-  apiUrl: string = 'http://api.openweathermap.org/data/2.5/forecast'
+  apikey: string = 'cIWDPCUJjfHAoKmJcArtpBZyU77gexDx'
+  geoApiKey: string = 'AIzaSyBiZa_fJotGY0kjzgtE6idkmSBP3NH2K_U'
+  apiUrl: string = 'https://api.tomorrow.io/v4/weather/forecast'
+  geoCodeUrl: string = 'https://maps.googleapis.com/maps/api/geocode/json'
   fetchedWeatherData: any = {}
 
   constructor (private route: ActivatedRoute, private http: HttpClient) {}
@@ -31,9 +33,10 @@ export class TrendpageComponent implements OnInit{
   }
 
   createChart(){
+    // check for weather type 
     const ctx = document.getElementById('MyChart') as HTMLCanvasElement;
     let minVal = Math.min(...this.fetchedWeatherData.trend)
-    let minData = minVal > 15 ? minVal - 15 : minVal
+    let minData = minVal - 5
 
     if (this.chart) {
       this.chart.destroy();
@@ -72,67 +75,78 @@ export class TrendpageComponent implements OnInit{
     }
   }
 
+  formatDate(isoDate: any) {
+    const date = new Date(isoDate);
+    const options: any = {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+    };
+    return date.toLocaleDateString('en-US', options).split(' ')[1];
+  }
+
   fetchWeatherData(location: string, trend: string): void {
     const params = {
-      q: location,
-      appid: this.apikey,
-      units: 'metric'
+      address: location,
+      key: this.geoApiKey,
     };
 
-    this.http.get(this.apiUrl, { params }).subscribe(
+    this.http.get(this.geoCodeUrl, { params }).subscribe(
       (response: any) => {
-        this.fetchedWeatherData = this.handleApiResponse(response, trend);
-        console.log(this.fetchedWeatherData)
-        this.createChart()
+        const end = response['results'][0]['geometry']['location']
+
+        this.http.get(`https://api.tomorrow.io/v4/weather/forecast?location=${end.lat}, ${end.lng}&apikey=${this.apikey}`).subscribe(
+          (response: any) => {
+            this.fetchedWeatherData = this.handleApiResponse(response, trend);
+            this.createChart()
+          },
+          (error) => {
+            console.error('Error fetching weather data:', error);
+          }
+        );
       },
       (error) => {
         console.error('Error fetching weather data:', error);
       }
     );
+
+    
   }
 
   handleApiResponse(response: any, trend: string): any {
-    const weatherData = response.list
+    const weatherData = response.timelines.hourly
     let trendData: Array<Number> = []
-    let stats: Array<any> = []
-    let desc: Array<String> = []
-    let details: Array<String> = []
     let labels: Array<String> = []
 
-    weatherData.map((dt: any) => {
-      desc = []
-      details = []
-      weatherData.map((dt: any) => desc.push(dt.weather[0].main))
-      weatherData.map((dt: any) => details.push(dt.weather[0].description))
-      stats.push({
-        'main': desc,
-        'description': details
-      })
-    })
-
-    weatherData.map((dt: any) => labels.push(dt.dt_txt.split(' ')))
+    weatherData.map((dt: any) => labels.push(this.formatDate(dt.time)))
 
     switch (trend) {
       case 'temperature':
         trendData = []
-        weatherData.map((dt: any) => trendData.push(dt.main.temp))
+        weatherData.map((dt: any) => trendData.push(dt.values.temperature))
         break;
       case 'humidity_level':
         trendData = []
-        weatherData.map((dt: any) => trendData.push(dt.main.humidity))
+        weatherData.map((dt: any) => trendData.push(dt.values.humidity))
         break;
-      case 'pressure':
+      case 'wind_direction':
         trendData = []
-        weatherData.map((dt: any) => trendData.push(dt.main.pressure)) 
+        weatherData.map((dt: any) => trendData.push(dt.values.windDirection)) 
+        break;
+      case 'wind_speed':
+        trendData = []
+        weatherData.map((dt: any) => trendData.push(dt.values.windSpeed)) 
         break;
       default:
         trendData = [];
     }
 
     return {
-      'labels': labels.slice(0, 20),
-      'trend': trendData.slice(0, 20),
-      'stats': stats.slice(0, 20)
+      'labels': labels.slice(0, 28),
+      'trend': trendData.slice(0, 28)
     }
   }
 

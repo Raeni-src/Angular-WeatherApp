@@ -6,12 +6,13 @@
     <div class="container">
         <h2>Select Weather Parameter</h2>
         <h2>What Would You Love To See?</h2>
-        <form (submit)="onSubmit($event)" class="input">
+        <form (submit)="onSubmit($event)" class="input mx-auto">
             <select id="trend" [(ngModel)]="myVar" name="trend">
                     <option value="" disabled>Select a trend</option>
                     <option value="temperature">Temperature</option>
                     <option value="humidity_level">Humidity level</option>
-                    <option value="pressure">Pressure</option>
+                    <option value="wind_direction">Wind Direction</option>
+                    <option value="wind_speed">Wind Speed</option>
              </select>
             <select id="type" [(ngModel)]="myType" name="type">
                     <option value="" disabled>Select Chart Type</option>
@@ -21,7 +22,7 @@
              <button type="submit">Select Your Trend</button>
         </form>
         <div class="chart-container">
-            <canvas id="MyChart" width="800" height="500">{{ chart }}</canvas>
+            <canvas id="MyChart" width="500" height="300">{{ chart }}</canvas>
         </div>
     </div>
 </body>
