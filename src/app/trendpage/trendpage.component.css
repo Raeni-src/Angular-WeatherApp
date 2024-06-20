@@ -50,11 +50,12 @@ select {
     outline: none;
     padding: 0.3rem 1rem;
     border-radius: 10px;
-    color: rgb(255 255 255);
+    color: rgb(190, 184, 184);
     height: 50px;
     width: 300px;
-    background: #7c7c7c2b;
+    background: #0000002b;
     font-family: 'Raleway', sans-serif;
+    font-weight: bold;
 }
 
 button {
@@ -62,7 +63,7 @@ button {
     height: 50px;
     padding: 0.3rem 2rem;
     border-radius: 10px;
-    background: #000000;
+    background: #0c0c0c;
     color: white;
     font-family: 'Raleway', sans-serif;
     transition: (.5s);

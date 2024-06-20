@@ -8,21 +8,48 @@
         <h2>What Would You Love To See?</h2>
         <form (submit)="onSubmit($event)" class="input mx-auto">
             <select id="trend" [(ngModel)]="myVar" name="trend">
-                    <option value="" disabled>Select a trend</option>
+                    <option [value]="" disabled>Select a trend</option>
                     <option value="temperature">Temperature</option>
                     <option value="humidity_level">Humidity level</option>
                     <option value="wind_direction">Wind Direction</option>
                     <option value="wind_speed">Wind Speed</option>
+                    <option value="precipitation">Precipitation</option>
+                    <option value="sunrise">Sunrise</option>
+                    <option value="sunset">Sunset</option>
              </select>
             <select id="type" [(ngModel)]="myType" name="type">
                     <option value="" disabled>Select Chart Type</option>
                     <option value="bar">Bar Chart</option>
                     <option value="line">Line Chart</option>
              </select>
+             <div>
+                
+                <legend>Chart Library</legend>
+                <input type="radio" id="chartchoice1" name="chartlibrary" [(ngModel)]="selectedChartLibrary" value="chart.js"/>
+                <label for="chartchoice1">Chart.js</label>
+                <input type="radio" id="chartchoice2" name="chartlibrary" [(ngModel)]="selectedChartLibrary" value="ngx-charts"/>
+                <label for="chartchoice2"> Ngx-Chart</label>
+             </div>
              <button type="submit">Get Weather</button>
         </form>
         <div class="chart-container">
-            <canvas id="MyChart" width="500" height="300">{{ chart }}</canvas>
+            <div *ngIf="selectedChartLibrary === 'chart.js'">
+            <canvas id="myChartJS" width="400" height="200">{{ chart }}</canvas>
+            </div>
+
+            <div *ngIf="selectedChartLibrary === 'ngx-charts'">
+            <ngx-charts-bar-vertical *ngIf="selectedChartType === 'bar'"
+            [view]="[500,300]"
+            [results]="barChartData"
+            [xAxis]="true"
+            [yAxis]="true"
+            [showXAxisLabel]="true"
+            [showYAxisLabel]="true"
+            xAxisLabel="X Axis Label"
+            yAxisLabel="Y Axis Label">
+            </ngx-charts-bar-vertical>
+            
+            </div>
         </div>
     </div>
 </body>
