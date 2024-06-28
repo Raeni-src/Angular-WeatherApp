@@ -8,7 +8,7 @@
         <h2>What Would You Love To See?</h2>
         <form (submit)="onSubmit($event)" class="input mx-auto">
             <select id="trend" [(ngModel)]="myVar" name="trend">
-                    <option [value]="" disabled>Select a trend</option>
+                    <option value="" disabled>Select a trend</option>
                     <option value="temperature">Temperature</option>
                     <option value="humidity_level">Humidity level</option>
                     <option value="wind_direction">Wind Direction</option>
@@ -17,13 +17,14 @@
                     <option value="sunrise">Sunrise</option>
                     <option value="sunset">Sunset</option>
              </select>
-            <select id="type" [(ngModel)]="myType" name="type">
+            <select id="type" [(ngModel)]="chartType" name="type">
                     <option value="" disabled>Select Chart Type</option>
                     <option value="bar">Bar Chart</option>
                     <option value="line">Line Chart</option>
              </select>
+
+             
              <div>
-                
                 <legend>Chart Library</legend>
                 <input type="radio" id="chartchoice1" name="chartlibrary" [(ngModel)]="selectedChartLibrary" value="chart.js"/>
                 <label for="chartchoice1">Chart.js</label>
@@ -35,20 +36,30 @@
         <div class="chart-container">
             <div *ngIf="selectedChartLibrary === 'chart.js'">
             <canvas id="myChartJS" width="400" height="200">{{ chart }}</canvas>
-            </div>
-
-            <div *ngIf="selectedChartLibrary === 'ngx-charts'">
-            <ngx-charts-bar-vertical *ngIf="selectedChartType === 'bar'"
-            [view]="[500,300]"
+        </div>
+        <!--Ngx bar chart-->
+           <div *ngIf="selectedChartLibrary === 'ngx-charts'">
+            <ngx-charts-bar-vertical *ngIf="chartType === 'bar'"
+            [view]="[650,450]"
             [results]="barChartData"
             [xAxis]="true"
             [yAxis]="true"
             [showXAxisLabel]="true"
             [showYAxisLabel]="true"
-            xAxisLabel="X Axis Label"
-            yAxisLabel="Y Axis Label">
+            [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel">
             </ngx-charts-bar-vertical>
-            
+        <!--ngx line chart-->
+            <ngx-charts-line-chart *ngIf="chartType === 'line'"
+            [view]="[650,450]"
+            [results]="lineChartData"
+            [xAxis]="true"
+            [yAxis]="true"
+            [showXAxisLabel]="true"
+            [showYAxisLabel]="true"
+            [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel"> 
+            </ngx-charts-line-chart>
             </div>
         </div>
     </div>

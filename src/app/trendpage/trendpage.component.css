@@ -79,6 +79,24 @@ button.button:hover{
 }
 
 .chart-container {
-    margin-top: 20px;
+    margin-top: 30px;
     width: 100%;
 }
+.chart-selection {
+    background: #0c0c0c;
+    padding: 1rem;
+    border-radius: 10px;
+    margin-top: 1rem;
+  }
+  
+  .chart-selection legend {
+    color: white;
+    font-weight: bold;
+  }
+  
+  .chart-selection label {
+    color: white;
+    margin-right: 1rem;
+  }
+
+ 
