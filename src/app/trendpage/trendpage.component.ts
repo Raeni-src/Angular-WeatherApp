@@ -27,7 +27,8 @@ export class TrendpageComponent implements OnInit{
   geoApiKey: string = 'AIzaSyBiZa_fJotGY0kjzgtE6idkmSBP3NH2K_U'
   
   //urls for weather and geocoding apis
-  apiUrl: string = 'https://api.tomorrow.io/v4/weather/forecast'
+ apiUrl: string = 'http://localhost:8080/v4/weather/forecast'
+ // apiUrl: string = 'https://api.tomorrow.io/v4/weather/forecast'
   geoCodeUrl: string = 'https://maps.googleapis.com/maps/api/geocode/json'
   fetchedWeatherData: any = {};    //stores the processed weather data
   barChartData: any[] = [];
@@ -137,10 +138,6 @@ export class TrendpageComponent implements OnInit{
       case 'precipitation':
         this.yAxisLabel = 'Precipitation Probability (%)';
         break;
-      case 'sunrise':
-      case 'sunset':
-        this.yAxisLabel = 'Time (hours)';
-        break;
       default:
         this.yAxisLabel = 'Value';
     }
@@ -220,16 +217,6 @@ export class TrendpageComponent implements OnInit{
       case 'precipitation':
          trendData.push(dt.values.precipitationProbability);
         break;
-      case 'sunset':
-        if (dt.values.sunsetTime){
-        trendData.push(this.formatTimeToDecimal(dt.values.sunsetTime));
-        }
-        break;
-      case 'sunrise':
-        if (dt.values.sunriseTime){
-         trendData.push(this.formatTimeToDecimal(dt.values.sunriseTime));
-       }
-         break;
       }
     });
     return {
