@@ -126,7 +126,7 @@ select, .chart-library-selection, button {
 select {
     width: 300px;
     color: rgb(190, 184, 184);
-    background: #0000002b;
+    background: #0c0c0c;
 }
 
 .chart-library-selection {
