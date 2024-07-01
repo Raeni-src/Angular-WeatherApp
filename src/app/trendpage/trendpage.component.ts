@@ -38,7 +38,7 @@ export class TrendpageComponent implements OnInit{
 
   xAxisLabel: string = 'Time';
   yAxisLabel: string = 'Value';
- colorScheme: string = 'Color';
+ 
 
   constructor (private route: ActivatedRoute, private http: HttpClient) {}
 

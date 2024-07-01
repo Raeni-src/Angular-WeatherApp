@@ -67,7 +67,7 @@
            <div *ngIf="selectedChartLibrary === 'ngx-charts'">
             <ngx-charts-bar-vertical *ngIf="chartType === 'bar'"
             [view]="[650,450]"
-            [scheme]="colorScheme"
+            
             [results]="barChartData"
             [xAxis]="true"
             [yAxis]="true"
@@ -79,7 +79,7 @@
         <!--ngx line chart-->
             <ngx-charts-line-chart *ngIf="chartType === 'line'"
             [view]="[650,450]"
-            [scheme]="colorScheme"
+            
             [results]="lineChartData"
             [xAxis]="true"
             [yAxis]="true"
