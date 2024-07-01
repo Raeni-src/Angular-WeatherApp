@@ -57,7 +57,7 @@ h2 {
     font-family: 'Raleway', sans-serif;
 }
 
-button {
+button, select {
     border: none;
     height: 50px;
     padding: 0.3rem 2rem;

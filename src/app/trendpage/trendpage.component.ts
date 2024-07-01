@@ -1,17 +1,19 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import {Chart as ChartJS, ChartType } from 'chart.js/auto';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+
 
 @Component({
   selector: 'app-trendpage',
   standalone: true,
   imports: [CommonModule, FormsModule, HttpClientModule, NgxChartsModule],
   templateUrl: './trendpage.component.html',
-  styleUrl: './trendpage.component.css'
+  styleUrl: './trendpage.component.css',
+  encapsulation: ViewEncapsulation.None
 })
 
 export class TrendpageComponent implements OnInit{
@@ -27,8 +29,8 @@ export class TrendpageComponent implements OnInit{
   geoApiKey: string = 'AIzaSyBiZa_fJotGY0kjzgtE6idkmSBP3NH2K_U'
   
   //urls for weather and geocoding apis
- apiUrl: string = 'http://localhost:8080/v4/weather/forecast'
- // apiUrl: string = 'https://api.tomorrow.io/v4/weather/forecast'
+ //apiUrl: string = 'http://localhost:8080/v4/weather/forecast'
+  apiUrl: string = 'https://api.tomorrow.io/v4/weather/forecast'
   geoCodeUrl: string = 'https://maps.googleapis.com/maps/api/geocode/json'
   fetchedWeatherData: any = {};    //stores the processed weather data
   barChartData: any[] = [];
@@ -36,6 +38,7 @@ export class TrendpageComponent implements OnInit{
 
   xAxisLabel: string = 'Time';
   yAxisLabel: string = 'Value';
+ colorScheme: string = 'Color';
 
   constructor (private route: ActivatedRoute, private http: HttpClient) {}
 

@@ -19,6 +19,7 @@ export class HomepageComponent implements OnInit {
   faSearch = faSearch;
   location: string = '';
 
+
   constructor(private router: Router) {}
 
   ngOnInit(): void {

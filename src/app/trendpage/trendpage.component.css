@@ -38,7 +38,7 @@ h2 {
     background: #000000d0;
     color: white;
 }
-
+/*
 .input {
     margin-top: 50px;
     display: flex;
@@ -57,7 +57,7 @@ select {
     font-family: 'Raleway', sans-serif;
     font-weight: bold;
 }
-
+*/
 button {
     border: none;
     height: 50px;
@@ -72,11 +72,12 @@ button {
 button.button:focus{
     outline:none;
 }
-
+/*
 button.button:hover{
     border: 1px solid rgb(122, 112, 112) 
     
 }
+    */
 
 .chart-container {
     margin-top: 30px;
@@ -99,4 +100,69 @@ button.button:hover{
     margin-right: 1rem;
   }
 
+
+
+.input {
+    margin-top: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+}
+
+select, .chart-library-selection, button {
+    border: none;
+    outline: none;
+    padding: 0.3rem 1rem;
+    border-radius: 10px;
+    color: white;
+    height: 50px;
+    background: #0c0c0c;
+    font-family: 'Raleway', sans-serif;
+    font-weight: bold;
+    transition: 0.5s;
+}
+
+select {
+    width: 300px;
+    color: rgb(190, 184, 184);
+    background: #0000002b;
+}
+
+.chart-library-selection {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.chart-library-selection span {
+    margin-right: 0.5rem;
+}
+
+.chart-library-selection label {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    cursor: pointer;
+}
+
+button:hover, .chart-library-selection:hover {
+    border: 1px solid rgb(122, 112, 112);
+}
+
+
+
+/* Target all text elements in the chart */
+.ngx-charts text {
+    fill: white !important;
+  }
+  
+  /* Specific targeting for axis and labels */
+  .ngx-charts .xAxis text,
+  .ngx-charts .yAaxis text,
+  .ngx-charts .xAxisLabel,
+  .ngx-charts .yAxisLabel {
+    fill: white !important;
+  }
+  
  

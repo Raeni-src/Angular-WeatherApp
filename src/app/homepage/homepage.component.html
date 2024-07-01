@@ -6,8 +6,17 @@
         <h1>Weather Visualization</h1>
 
         <form class="input" (submit)="onSearch($event)">
-            <input type="text" [(ngModel)]="location" name="location" class="inputValue" placeholder="Enter Your Location">
+          <select [(ngModel)]="location" name="location" class="inputValue">
+            <option value="" disabled selected>Select a town</option>
+            <option value="buea">Buea</option>
+            <option value="douala">Douala</option>
+            <option value="limbe">Limbe</option>
+            <option value="bamenda">Bamenda</option>
+        </select>
             <button type="submit">Search</button>
           </form>
     </div>
   </body>
+
+
+  

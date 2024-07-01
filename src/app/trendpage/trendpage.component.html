@@ -15,13 +15,14 @@
                     <option value="wind_speed">Wind Speed</option>
                     <option value="precipitation">Precipitation</option>
              </select>
+             
             <select id="type" [(ngModel)]="chartType" name="type">
                     <option value="" disabled>Select Chart Type</option>
                     <option value="bar">Bar Chart</option>
                     <option value="line">Line Chart</option>
              </select>
 
-             
+             <!--
              <div>
                 <legend>Chart Library</legend>
                 <input type="radio" id="chartchoice1" name="chartlibrary" [(ngModel)]="selectedChartLibrary" value="chart.js"/>
@@ -30,7 +31,34 @@
                 <label for="chartchoice2"> Ngx-Chart</label>
              </div>
              <button type="submit">Get Weather</button>
-        </form>
+            -->
+        <div class="chart-library-selection">
+            <span>Chart Library:</span>
+            <label>
+                <input type="radio" name="chartlibrary" [(ngModel)]="selectedChartLibrary" value="chart.js"/>
+                Chart.js
+            </label>
+            <label>
+                <input type="radio" name="chartlibrary" [(ngModel)]="selectedChartLibrary" value="ngx-charts"/>
+                Ngx-Chart
+            </label>
+        </div>
+        <button type="submit">Get Weather</button>
+
+    </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
         <div class="chart-container">
             <div *ngIf="selectedChartLibrary === 'chart.js'">
             <canvas id="myChartJS" width="400" height="200">{{ chart }}</canvas>
@@ -39,6 +67,7 @@
            <div *ngIf="selectedChartLibrary === 'ngx-charts'">
             <ngx-charts-bar-vertical *ngIf="chartType === 'bar'"
             [view]="[650,450]"
+            [scheme]="colorScheme"
             [results]="barChartData"
             [xAxis]="true"
             [yAxis]="true"
@@ -50,6 +79,7 @@
         <!--ngx line chart-->
             <ngx-charts-line-chart *ngIf="chartType === 'line'"
             [view]="[650,450]"
+            [scheme]="colorScheme"
             [results]="lineChartData"
             [xAxis]="true"
             [yAxis]="true"
