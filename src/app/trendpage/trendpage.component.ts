@@ -22,11 +22,11 @@ export class TrendpageComponent implements OnInit{
   myVar: string = 'temperature';                  //stores the selected weather variable inittially temperature
   chartType: ChartType = 'bar' ;                 //stores the chart type
   selectedChartLibrary: string='chartjs';        //default chart type
- //default chart type
+ 
 
   //api keys for both the weather services and geocoding services
-  apikey: string = 'OadOdFFBTzTIAaNY5xDtrTkH27KDCJc6'    
-  geoApiKey: string = 'AIzaSyBiZa_fJotGY0kjzgtE6idkmSBP3NH2K_U'
+  //apikey: string = 'OadOdFFBTzTIAaNY5xDtrTkH27KDCJc6'    
+ // geoApiKey: string = 'AIzaSyBiZa_fJotGY0kjzgtE6idkmSBP3NH2K_U'
   
   //urls for weather and geocoding apis
  apiUrl: string = 'http://localhost:8080/v4/weather/forecast'
@@ -43,7 +43,7 @@ export class TrendpageComponent implements OnInit{
   constructor (private route: ActivatedRoute, private http: HttpClient) {}
 
   ngOnInit(): void {
-    //this function retrives location from the url parameter
+    //this function retrives location from the database
     this.route.paramMap.subscribe(params => {
       this.location = params.get('location') || '' ;
     });
@@ -59,17 +59,18 @@ export class TrendpageComponent implements OnInit{
   }
     //Charts from Chart.js
     createChartJsChart(){
-    //destroys existing chart if present
     if (this.chart) {
       this.chart.destroy(); 
     }
     const ctx = document.getElementById('myChartJS') as HTMLCanvasElement;
+
     //creates a new chart.js instance on the canvas element
     this.chart = new ChartJS(ctx, {
-      type: this.chartType ,  //set chart type from user selection
-      //chart data definition
+      type: this.chartType , //set chart type from user selection
+
+      //chart data definition and customization
       data: {
-        labels: this.fetchedWeatherData.labels.slice(0, 28),   //this is limited to first 28 and its extracted from fetchedWeatherData
+        labels: this.fetchedWeatherData.labels.slice(0, 28),
      //an array with one object representing the weather variable
 	      datasets: [
           {
@@ -101,9 +102,9 @@ export class TrendpageComponent implements OnInit{
       },
     });
   }
+
    //creating ngx chart
    createChartNgxChart() {
-    // Destroy existing chart if present (assuming you have a reference)
     if (this.chart) {
       this.chart.destroy();
     }
@@ -122,7 +123,7 @@ export class TrendpageComponent implements OnInit{
         }];
     }
   }
-
+    //naming axes
   updateAxisLabels() {
     this.xAxisLabel = 'Time';
     switch (this.myVar) {
@@ -146,9 +147,11 @@ export class TrendpageComponent implements OnInit{
     }
   }
 
-  onSubmit(event: Event): void {     //function handles form submission
+//function handles form submission
+  onSubmit(event: Event): void {     
     event.preventDefault();
     console.log(event);
+
     //condition to check if both location and weather variable are selected,if true fetchWeatherData is called to retrieve the data
     if (this.location && this.myVar) {
       this.fetchWeatherData(this.location, this.myVar);
@@ -171,12 +174,9 @@ export class TrendpageComponent implements OnInit{
 
   //function to fetch the weather data
   fetchWeatherData(location: string, trend: string): void {
-    const params = {  //contructing the parameters for the geocoding api call
-      address: location,
-      key: this.geoApiKey,
-    };
-    //making an http GET request to the weather API
-    this.http.get(`${this.apiUrl}?location=${location}&apikey=${this.apikey}`).subscribe(
+    //making an http GET request to the weather database
+    this.http.get(`${this.apiUrl}?location=${location}`).subscribe(
+      
       //calls createChart to display the chart
          (response: any) => {
            console.log('got trend data')
@@ -210,12 +210,6 @@ export class TrendpageComponent implements OnInit{
         break;
       case 'humidity_level':
          trendData.push(dt.values.humidity);
-        break;
-      case 'wind_direction':
-         trendData.push(dt.values.windDirection); 
-        break;
-      case 'wind_speed':
-         trendData.push(dt.values.windSpeed);
         break;
       case 'precipitation':
          trendData.push(dt.values.precipitationProbability);
